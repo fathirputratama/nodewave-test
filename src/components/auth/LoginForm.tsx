@@ -1,4 +1,4 @@
-  'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -25,6 +25,10 @@ import {
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
+interface ApiErrorResponse {
+  message?: string;
+  errors?: string[];
+}
 export default function LoginForm() {
   const { token, setAuth } = useAuthStore();
   const router = useRouter();
@@ -45,11 +49,10 @@ const form = useForm<LoginSchema>({
   },
 });
 
-
-  const loginMutation = useMutation({
-    mutationFn: async (data: LoginSchema) => {
-      const response = await api.post('/login', data);
-      return response.data;
+const loginMutation = useMutation({
+  mutationFn: async (data: LoginSchema) => {
+    const response = await api.post('/login', data);
+    return response.data;
     },
     onSuccess: (data) => {
       if (data.content?.token && data.content?.user?.role) {
@@ -61,10 +64,14 @@ const form = useForm<LoginSchema>({
         toast.error('Login gagal: Token atau role tidak ditemukan');
       }
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
+      const errorMessage =
+        error.response?.data?.message ||
+        (error.response?.data?.errors?.[0]) ||
+        'Email atau password salah';
       console.error('Error login:', error.response?.data || error.message);
-      setError('Email atau password salah');
-      toast.error('Login gagal. Silakan coba lagi.');
+      setError(errorMessage);
+      toast.error(`Login gagal: ${errorMessage}`);
     },
   });
 

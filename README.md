@@ -1,6 +1,7 @@
 # Todo List App
 
 Aplikasi web todo list menggunakan Next.js, Zod, Tanstack Query, dan Shadcn UI.
+Aplikasi ini menyediakan fitur otentikasi dan manajemen todo.
 
 ## Cara menjalankan
 1. Clone repository:
