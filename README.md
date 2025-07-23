@@ -1,4 +1,4 @@
-# fathir_fdtest
+# Todo List App
 
 Aplikasi web todo list menggunakan Next.js, Zod, Tanstack Query, dan Shadcn UI.
 
