@@ -226,7 +226,7 @@ export default function TodosPage() {
                   onKeyDown={handleKeyDown}
                   className="w-64 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
-                <Button type="submit">Search</Button>
+                <Button type="submit" className="bg-blue-500 hover:bg-blue-600">Search</Button>
               </form>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
